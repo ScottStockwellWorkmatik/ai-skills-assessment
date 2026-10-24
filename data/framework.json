@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "title": "AI Skills Assessment",
+    "version": "1.1.0",
+    "levels": ["Unaware", "Aware", "Developing", "Proficient", "Champion"],
+    "euIntro": "Providers and deployers of AI systems must take measures to support the AI literacy of their staff and others using AI systems on their behalf (Article 4). The Act does not require a certificate or any guaranteed level of literacy for an individual. Indicators marked EU AI Act show where the framework maps to AI Act obligations. Many of those obligations apply only to high-risk AI systems, and some fall on providers rather than deployers.",
+    "verification": "verified",
+    "verifiedDate": "2026-10-24",
+    "verifiedAgainst": "Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744, consolidated text as at 27 July 2026"
+  },
+  "domains": [
+    {
+      "id": 0,
+      "short": "AI literacy",
+      "name": "AI literacy & concepts",
+      "desc": "Understanding what AI is, how it works, and what it can and cannot do.",
+      "levels": [
+        { "label": "No knowledge", "skills": [
+          { "t": "Has not encountered AI in a professional context" },
+          { "t": "No awareness of AI terminology or capabilities" }
+        ]},
+        { "label": "Basic awareness", "skills": [
+          { "t": "Can define AI, machine learning, and generative AI in plain language" },
+          { "t": "Aware of common AI tools (e.g. ChatGPT, Copilot)" },
+          { "t": "Understands AI is used in the organisation" },
+          { "t": "Aware of EU AI Act existence and that it creates obligations", "eu": true }
+        ]},
+        { "label": "Applied understanding", "skills": [
+          { "t": "Distinguishes between AI types (generative, predictive, classification)" },
+          { "t": "Understands how AI systems are trained and what data they require" },
+          { "t": "Can explain limitations: hallucinations, bias, lack of reasoning" },
+          { "t": "Understands the AI Act's four risk levels: unacceptable (prohibited), high, transparency, and minimal or no risk", "eu": true },
+          { "t": "Can identify whether a tool they use may be high-risk under the Act", "eu": true }
+        ]},
+        { "label": "Practitioner", "skills": [
+          { "t": "Evaluates AI system capabilities and limitations for specific use cases" },
+          { "t": "Understands model behaviour, confidence scores, and uncertainty" },
+          { "t": "Can explain AI outputs to non-technical stakeholders" },
+          { "t": "Assesses AI tools against EU AI Act classification criteria", "eu": true },
+          { "t": "Contributes to AI system documentation and audit trails", "eu": true }
+        ]},
+        { "label": "Champion/mastery", "skills": [
+          { "t": "Advises the organisation on AI capability roadmaps" },
+          { "t": "Leads technical evaluations and proof-of-concepts" },
+          { "t": "Translates complex AI concepts across all seniority levels" },
+          { "t": "Leads the organisation's AI literacy measures under Article 4 and keeps internal records of them", "eu": true },
+          { "t": "Engages with regulators and standards bodies on AI governance", "eu": true }
+        ]}
+      ]
+    },
+    {
+      "id": 1,
+      "short": "Ethics",
+      "name": "Ethical & responsible AI",
+      "desc": "Ensuring AI is used fairly, transparently, and without causing harm.",
+      "levels": [
+        { "label": "No knowledge", "skills": [
+          { "t": "No awareness of AI ethics or potential harms" },
+          { "t": "Has not considered bias, fairness, or accountability in AI" }
+        ]},
+        { "label": "Basic awareness", "skills": [
+          { "t": "Aware that AI can produce biased or harmful outputs" },
+          { "t": "Understands the concept of AI transparency" },
+          { "t": "Aware of prohibited AI practices under Article 5 (e.g. social scoring, inferring emotions in the workplace or education outside medical and safety uses)", "eu": true }
+        ]},
+        { "label": "Applied understanding", "skills": [
+          { "t": "Identifies ethical risks in AI use cases within their function" },
+          { "t": "Applies basic fairness checks before adopting AI tools" },
+          { "t": "Raises concerns about AI outputs with appropriate parties" },
+          { "t": "Knows when a fundamental rights impact assessment is required (Article 27: public bodies, private entities providing public services, and certain Annex III uses)", "eu": true },
+          { "t": "Avoids using banned AI practices; can recognise them in vendor tools", "eu": true }
+        ]},
+        { "label": "Practitioner", "skills": [
+          { "t": "Conducts structured ethical reviews of AI proposals" },
+          { "t": "Designs human oversight mechanisms for AI-assisted decisions" },
+          { "t": "Champions inclusive AI design in their teams" },
+          { "t": "Leads fundamental rights impact assessments where Article 27 applies", "eu": true },
+          { "t": "Assigns human oversight to people with the necessary competence, training and authority, who can override AI outputs (Article 26(2))", "eu": true }
+        ]},
+        { "label": "Champion/mastery", "skills": [
+          { "t": "Sets organisational ethics policy for AI use" },
+          { "t": "Embeds responsible AI principles into procurement and product design" },
+          { "t": "External advocate for ethical AI standards" },
+          { "t": "Accountable for avoiding prohibited practices (Article 5) and, for high-risk systems the organisation provides, for the risk management system (Article 9)", "eu": true },
+          { "t": "Interfaces with national competent authority on ethics and rights compliance", "eu": true }
+        ]}
+      ]
+    },
+    {
+      "id": 2,
+      "short": "Tools",
+      "name": "AI tools & practical application",
+      "desc": "Using AI tools effectively and safely to deliver better outcomes.",
+      "levels": [
+        { "label": "No knowledge", "skills": [
+          { "t": "Has never used an AI tool in a work context" },
+          { "t": "No ability to assess the output quality of AI systems" }
+        ]},
+        { "label": "Basic awareness", "skills": [
+          { "t": "Has experimented with at least one AI tool (e.g. a generative AI assistant)" },
+          { "t": "Can follow a prompt to generate basic content or analysis" },
+          { "t": "Understands the need to verify AI outputs before use" }
+        ]},
+        { "label": "Applied understanding", "skills": [
+          { "t": "Uses AI tools regularly and purposefully in day-to-day work" },
+          { "t": "Writes effective prompts and iterates to improve output quality" },
+          { "t": "Understands when AI is not the right tool" },
+          { "t": "Critically reviews AI outputs for accuracy, bias, and relevance" },
+          { "t": "Does not input personal, confidential, or regulated data into unauthorised AI tools" }
+        ]},
+        { "label": "Practitioner", "skills": [
+          { "t": "Selects and configures AI tools appropriate to a business problem" },
+          { "t": "Evaluates vendor AI tools against organisational standards" },
+          { "t": "Trains or coaches team members on safe AI tool use" },
+          { "t": "Designs AI-assisted workflows with appropriate checkpoints" },
+          { "t": "Oversees AI tool deployment and, for high-risk systems, keeps the logs under the organisation's control (Article 26(6))", "eu": true },
+          { "t": "Ensures staff overseeing high-risk systems have the competence and authority to override AI decisions (Article 26(2))", "eu": true }
+        ]},
+        { "label": "Champion/mastery", "skills": [
+          { "t": "Defines organisational AI tool standards and approved tool catalogue" },
+          { "t": "Leads build-vs-buy decisions for AI capabilities" },
+          { "t": "Architects AI solutions aligned with strategic objectives" },
+          { "t": "Ensures deployed AI tools are used in line with the provider's instructions and deployer obligations (Article 26), and asks vendors for evidence of conformity", "eu": true },
+          { "t": "Keeps documentation for high-risk systems: the provider's instructions for use (Article 13) for each tool deployed and, for systems the organisation provides, the technical documentation (Article 11)", "eu": true }
+        ]}
+      ]
+    },
+    {
+      "id": 3,
+      "short": "Data & privacy",
+      "name": "Data & privacy governance",
+      "desc": "Handling data responsibly in AI contexts, in line with GDPR and the EU AI Act.",
+      "levels": [
+        { "label": "No knowledge", "skills": [
+          { "t": "No awareness of data privacy in the context of AI" },
+          { "t": "Does not consider data quality or provenance when using AI tools" }
+        ]},
+        { "label": "Basic awareness", "skills": [
+          { "t": "Understands that AI systems require data and that data quality matters" },
+          { "t": "Aware of GDPR and that personal data has special protections" },
+          { "t": "Aware that EU AI Act has data governance requirements for high-risk systems", "eu": true }
+        ]},
+        { "label": "Applied understanding", "skills": [
+          { "t": "Does not feed personal or confidential data into unapproved AI tools" },
+          { "t": "Understands the difference between training data and input data" },
+          { "t": "Can identify when an AI use case may trigger a Data Protection Impact Assessment (DPIA)" },
+          { "t": "Understands Article 10 data requirements: data sets relevant, sufficiently representative, as free of errors and complete as possible, and examined for bias", "eu": true },
+          { "t": "Knows that providers (Article 19) and deployers (Article 26(6)) of high-risk systems keep logs under their control for at least six months, unless other law such as data protection law says otherwise", "eu": true }
+        ]},
+        { "label": "Practitioner", "skills": [
+          { "t": "Conducts or commissions DPIAs for AI use cases involving personal data" },
+          { "t": "Defines data governance standards for AI projects" },
+          { "t": "Monitors for data drift and degraded model performance" },
+          { "t": "Ensures training datasets are documented and auditable" },
+          { "t": "Implements data governance aligned with Article 10 for high-risk systems the organisation provides", "eu": true },
+          { "t": "Keeps, and can produce on request, the logs under the organisation's control (Articles 19 and 26(6))", "eu": true }
+        ]},
+        { "label": "Champion/mastery", "skills": [
+          { "t": "Sets data strategy for AI across the organisation" },
+          { "t": "Engages with DPA and regulators on AI data governance" },
+          { "t": "Designs privacy-by-design frameworks for AI development" },
+          { "t": "For high-risk systems the organisation provides, accountable for data governance (Article 10), record-keeping (Article 12) and the quality management system (Article 17)", "eu": true },
+          { "t": "Leads responses to regulator requests and, for systems the organisation provides, post-market monitoring (Article 72)", "eu": true }
+        ]}
+      ]
+    },
+    {
+      "id": 4,
+      "short": "Leadership",
+      "name": "Change leadership & AI strategy",
+      "desc": "Leading people and the organisation through AI-enabled change.",
+      "levels": [
+        { "label": "No knowledge", "skills": [
+          { "t": "No engagement with AI as a business or leadership topic" },
+          { "t": "Has not considered how AI affects their team or function" }
+        ]},
+        { "label": "Basic awareness", "skills": [
+          { "t": "Aware that AI is changing the nature of work" },
+          { "t": "Can articulate basic opportunities and risks of AI for their function" },
+          { "t": "Open to experimenting with AI tools in their role" }
+        ]},
+        { "label": "Applied understanding", "skills": [
+          { "t": "Identifies AI opportunities and risks within their team" },
+          { "t": "Engages team members in conversations about AI adoption" },
+          { "t": "Manages concerns about AI job displacement constructively" },
+          { "t": "Communicates AI Act obligations clearly to direct reports", "eu": true }
+        ]},
+        { "label": "Practitioner", "skills": [
+          { "t": "Leads AI adoption initiatives within their function" },
+          { "t": "Builds team capability through structured learning programmes" },
+          { "t": "Designs change management plans for AI-enabled transformation" },
+          { "t": "Measures and reports on AI adoption and outcomes" },
+          { "t": "Ensures team members are supported with AI literacy measures suited to their role and context (Article 4)", "eu": true },
+          { "t": "Creates a culture of responsible AI use with clear escalation paths" }
+        ]},
+        { "label": "Champion/mastery", "skills": [
+          { "t": "Sponsors AI transformation at executive or board level" },
+          { "t": "Builds AI into talent strategy, recruitment, and L&D frameworks" },
+          { "t": "Creates organisation-wide AI culture and psychological safety" },
+          { "t": "Accountable for the organisation's AI literacy measures under Article 4", "eu": true },
+          { "t": "Ensures governance, supervision, and oversight frameworks meet regulatory requirements", "eu": true }
+        ]}
+      ]
+    },
+    {
+      "id": 5,
+      "short": "Strategy",
+      "name": "AI application to organisational strategy",
+      "desc": "Connecting AI capability to organisational goals, strategy, and competitive advantage.",
+      "levels": [
+        { "label": "No knowledge", "skills": [
+          { "t": "No connection drawn between AI and organisational strategy" },
+          { "t": "Has not considered AI in the context of business objectives" }
+        ]},
+        { "label": "Basic awareness", "skills": [
+          { "t": "Understands that AI can contribute to organisational goals" },
+          { "t": "Can name at least one strategic AI use case relevant to their sector" },
+          { "t": "Aware of the competitive landscape around AI adoption" }
+        ]},
+        { "label": "Applied understanding", "skills": [
+          { "t": "Links AI projects to specific KPIs or strategic outcomes in their area" },
+          { "t": "Can articulate an AI value case to their manager" },
+          { "t": "Prioritises AI initiatives based on strategic impact" },
+          { "t": "Considers AI implications in functional planning" }
+        ]},
+        { "label": "Practitioner", "skills": [
+          { "t": "Develops AI roadmaps for their function aligned to strategy" },
+          { "t": "Builds business cases for AI investment with measurable ROI" },
+          { "t": "Integrates AI outcomes into performance frameworks" },
+          { "t": "Identifies where AI creates or erodes competitive advantage" },
+          { "t": "Ensures high-risk AI use cases are identified and assessed before deployment, ahead of the high-risk obligations (2 December 2027 for Annex III uses, 2 August 2028 for Annex I products)", "eu": true }
+        ]},
+        { "label": "Champion/mastery", "skills": [
+          { "t": "Leads organisation-wide AI strategy development" },
+          { "t": "Integrates AI into corporate strategy, governance, and risk frameworks" },
+          { "t": "Engages board and investors on AI as a strategic asset" },
+          { "t": "Benchmarks AI maturity against industry standards" },
+          { "t": "Ensures organisation meets all EU AI Act deployer and provider obligations as strategy scales", "eu": true },
+          { "t": "Monitors changes to the Act and its application dates (already amended in 2026 by the Digital Omnibus) and adjusts strategy accordingly", "eu": true }
+        ]}
+      ]
+    }
+  ]
+}
