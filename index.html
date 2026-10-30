@@ -1,88 +1,180 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-GB">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Marketing AI Journey Map | Workmatik</title>
-<meta name="description" content="Step through the AI transformation journey for marketing. Two flows, one for the marketing leader and one for the marketer, cover 35 activities and show what must come first.">
-<meta property="og:title" content="Marketing AI Journey Map">
-<meta property="og:description" content="Two flows, 35 activities. See what a marketing leader and a marketer each need to do, in what order, and what depends on what.">
+<title>AI Skills Assessment | Workmatik</title>
+<meta name="description" content="Rate your AI skills across six domains, see your next step and compare team results. Runs entirely in your browser.">
+<meta property="og:title" content="AI Skills Assessment">
+<meta property="og:description" content="Rate your AI skills across six domains with EU AI Act indicators, see your next step and compare team gaps. Runs in your browser.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://scottstockwellworkmatik.github.io/marketing-ai-journey-map/">
+<meta property="og:url" content="https://scottstockwellworkmatik.github.io/ai-skills-assessment/">
 <meta property="og:site_name" content="Workmatik">
-<meta property="og:image" content="https://scottstockwellworkmatik.github.io/marketing-ai-journey-map/og-image.png?v=1">
-<meta property="og:image:width" content="2400">
-<meta property="og:image:height" content="1260">
-<meta property="og:image:alt" content="Marketing AI Journey Map by Workmatik: two flows of activities, one for the marketing leader and one for the marketer, across five phases with dependencies highlighted">
+<meta property="og:image" content="https://scottstockwellworkmatik.github.io/ai-skills-assessment/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI Skills Assessment by Workmatik: a grid of six AI skill domains rated across five levels">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="AI Skills">
 <link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<a class="skip" href="#main">Skip to the map</a>
+<a class="skip" href="#main">Skip to content</a>
+
 <header class="site-header">
   <div class="wrap header-inner">
     <div>
-      <img class="logo" src="assets/logo-black.svg" alt="Workmatik" id="logoScreen">
-      <p class="eyebrow">AI readiness for marketing</p>
-      <h1>Marketing AI Journey Map</h1>
-      <p class="sub">Two flows cover all 35 activities: what a marketing leader does and what a marketer does. Select an activity to see what must come first and what it unlocks.</p>
+      <img class="logo logo-screen" src="assets/workmatik-logo-white.svg" alt="Workmatik" width="180" height="21">
+      <img class="logo logo-print" src="assets/workmatik-logo-black.svg" alt="" width="180" height="21" aria-hidden="true">
+      <h1>AI Skills Assessment</h1>
+      <p class="sub">Self-assessment, second-rater calibration and team rollup, with EU AI Act indicators.</p>
     </div>
-    <p class="privacy-chip"><span>&#9679;</span> Runs in your browser. Nothing is sent or stored.</p>
+    <p class="privacy-chip" title="No data is sent to a server or stored by this page">
+      <span aria-hidden="true">&#9679;</span> Runs in your browser. Nothing is uploaded or stored.
+    </p>
   </div>
 </header>
 
 <main id="main" class="wrap">
-  <div class="info-box">
-    <strong>How to use this map.</strong>
-    <ol class="steps">
-      <li>Pick an activity in either flow. Orange shows what it <em>needs first</em>, blue shows what it <em>unlocks</em>.</li>
-      <li>Read the panel at the foot of the screen for the full activity, what &ldquo;done&rdquo; looks like and the linked activities. Select a linked activity to follow the chain.</li>
-      <li>Bold IDs in a box&rsquo;s &ldquo;Needs first&rdquo; line belong to the other flow, so they mark handovers between leader and marketer.</li>
-    </ol>
+  <p id="verifyNote" class="verify-note" hidden></p>
+  <p id="loadError" class="error" role="alert" hidden></p>
+
+  <div class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-framework" aria-controls="panel-framework" aria-selected="true">Framework</button>
+    <button class="tab" role="tab" id="tab-assess" aria-controls="panel-assess" aria-selected="false" tabindex="-1">Self-assessment</button>
+    <button class="tab" role="tab" id="tab-rollup" aria-controls="panel-rollup" aria-selected="false" tabindex="-1">Team rollup</button>
+    <button class="tab" role="tab" id="tab-guide" aria-controls="panel-guide" aria-selected="false" tabindex="-1">How to use</button>
   </div>
 
-  <div id="loadError" class="error" role="alert" hidden></div>
+  <!-- Framework -->
+  <section id="panel-framework" role="tabpanel" aria-labelledby="tab-framework">
+    <div class="info-box" id="euIntro"></div>
+    <div class="chips" id="domainChips" role="group" aria-label="Filter by domain"></div>
+    <div id="domainCards"></div>
+  </section>
 
-  <div class="toolbar">
-    <ul class="keyline" id="key" aria-label="Key"></ul>
-    <label class="check"><input type="checkbox" id="showAll"> Show all dependencies</label>
-  </div>
-
-  <div class="map-scroll" tabindex="0" aria-label="Journey map, scrolls sideways on narrow screens">
-    <div class="stage" id="stage">
-      <svg class="edges" id="edges" aria-hidden="true">
-        <defs>
-          <marker id="m-up" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#C8431A"/></marker>
-          <marker id="m-down" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1F7CAD"/></marker>
-          <marker id="m-all" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8A949C"/></marker>
-        </defs>
-        <g id="edgeLayer"></g>
-      </svg>
-      <section class="flow" id="flow-L" aria-labelledby="h-L"><h2 id="h-L"></h2><p class="flow-sub" id="s-L"></p><div class="grid" id="g-L"></div></section>
-      <section class="flow" id="flow-M" aria-labelledby="h-M"><h2 id="h-M"></h2><p class="flow-sub" id="s-M"></p><div class="grid" id="g-M"></div></section>
+  <!-- Self-assessment -->
+  <section id="panel-assess" role="tabpanel" aria-labelledby="tab-assess" hidden>
+    <div class="info-box">
+      <strong>How to self-assess.</strong> Rate yourself on each domain. 0 means no awareness; 4 means organisational champion.
+      Be honest: the result drives your development plan. A manager or peer can complete the same form independently,
+      then both files are compared in the Team rollup tab.
     </div>
-  </div>
 
-  <section class="card panel" id="panel" aria-live="polite"><p class="empty">Select an activity to see what it needs first, what it unlocks and what done looks like.</p></section>
+    <form class="meta-form" id="metaForm" onsubmit="return false">
+      <label>Rater type
+        <select id="raterType">
+          <option value="self">Self-assessment</option>
+          <option value="manager">Manager feedback</option>
+          <option value="peer">Peer feedback</option>
+        </select>
+      </label>
+      <label>Name or initials <span class="hint">(subject of the assessment)</span>
+        <input id="personName" type="text" maxlength="60" autocomplete="off" placeholder="e.g. JS">
+      </label>
+      <label>Team or department
+        <input id="teamName" type="text" maxlength="60" autocomplete="off" placeholder="e.g. Marketing">
+      </label>
+    </form>
 
-  <section class="card">
-    <h2>About this map</h2>
-    <p>The 35 activities come from Workmatik&rsquo;s AI readiness framework for marketing. Each appears once: 18 in the leader flow and 17 in the marketer flow. The five phases are Direct, Organise, Build, Scale and Sustain.</p>
-    <p>The ID letter shows the category. A thick outline and a star mark the four activities proposed as critical.</p>
-    <p class="hint">The allocation of activities to the two flows, the phases and the dependencies are the author&rsquo;s judgement and have no published source. Treat them as a starting point to challenge and adapt for your team.</p>
+    <div id="assessRows"></div>
+
+    <div class="summary-grid" id="summaryCards" aria-live="polite"></div>
+
+    <div class="actions">
+      <button class="btn primary" id="btnDownload">Download results (XLSX)</button>
+      <button class="btn" id="btnReset">Reset ratings</button>
+    </div>
+    <p class="hint">Keep the downloaded file: it is your record and the input to the Team rollup tab.
+      For the person being assessed, use initials or a staff code if your policy requires pseudonymised data.</p>
+  </section>
+
+  <!-- Team rollup -->
+  <section id="panel-rollup" role="tabpanel" aria-labelledby="tab-rollup" hidden>
+    <div class="info-box">
+      <strong>Combine results.</strong> Drop in several downloaded XLSX files. Files are read in your browser and are not uploaded.
+      Self-assessments build the team heatmap; manager and peer files for the same name are compared to flag gaps of more than one level.
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <label for="fileInput" class="btn">Choose XLSX files</label>
+      <input id="fileInput" type="file" accept=".xlsx" multiple>
+      <span class="hint">or drag files here</span>
+    </div>
+    <ul id="importMessages" class="messages" aria-live="polite"></ul>
+
+    <div id="rollupBody" hidden>
+      <div class="rollup-controls">
+        <label>Show
+          <select id="rollupFilter">
+            <option value="self">Self-assessments</option>
+            <option value="manager">Manager feedback</option>
+            <option value="peer">Peer feedback</option>
+            <option value="all">All raters</option>
+          </select>
+        </label>
+        <label>Group by
+          <select id="rollupGroup">
+            <option value="all">Everyone</option>
+            <option value="team">Team or department</option>
+          </select>
+        </label>
+        <button class="btn primary" id="btnRollupExport">Download rollup (XLSX)</button>
+        <button class="btn" id="btnRollupClear">Clear files</button>
+      </div>
+
+      <h2>Domain averages</h2>
+      <div id="rollupAverages"></div>
+
+      <h2>Individual results</h2>
+      <div class="table-scroll" id="rollupMatrix"></div>
+
+      <h2>Calibration flags</h2>
+      <p class="hint">Where a manager or peer rating differs from the self-rating by more than one level. Matched on name.</p>
+      <div class="table-scroll" id="rollupCalibration"></div>
+    </div>
+  </section>
+
+  <!-- Guide -->
+  <section id="panel-guide" role="tabpanel" aria-labelledby="tab-guide" hidden>
+    <div class="info-box">
+      <strong>New to this?</strong> Read the short self-guide first (PDF, 4 pages):
+      <a href="assets/client-guide.pdf" target="_blank" rel="noopener">AI Skills Assessment: your self-guide</a>.
+    </div>
+    <div class="card">
+      <h2>The five proficiency levels</h2>
+      <div class="level-grid" id="guideLevels"></div>
+    </div>
+    <div class="card">
+      <h2>Assessment process</h2>
+      <ol class="steps">
+        <li><strong>Self-assessment.</strong> Each person completes the Self-assessment tab and downloads the XLSX. About 10 minutes.</li>
+        <li><strong>Second rater.</strong> A manager or peer completes the same form independently, choosing Manager or Peer feedback and entering the same name.</li>
+        <li><strong>Calibration.</strong> Load both files in Team rollup. Differences of more than one level are flagged for a development conversation.</li>
+        <li><strong>Team rollup.</strong> Load everyone's files to see averages and gaps by domain, and prioritise cohort learning.</li>
+        <li><strong>Records.</strong> Keep the XLSX files and resulting development plans as part of your internal records of AI literacy measures. The European Commission says internal records are sufficient and no certificate is required. Check with your legal adviser what your organisation must retain.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>About your data</h2>
+      <p>This page has no server, no account and no tracking. Ratings exist only in this browser tab and are lost when you close or refresh it, unless you download the XLSX. Files loaded into Team rollup are read locally and never uploaded.</p>
+    </div>
   </section>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p>&copy; Workmatik. Map version <span id="mapVersion"></span>. A planning aid, not advice.</p>
+    <p>&copy; Workmatik. Framework version <span id="fwVersion"></span>. This tool supports AI literacy planning and is not legal advice.</p>
+    <p id="verifiedNote" class="verified-note" hidden></p>
   </div>
 </footer>
+
+<script src="lib/xlsx.full.min.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
