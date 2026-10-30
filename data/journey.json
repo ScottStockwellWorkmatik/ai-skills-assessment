@@ -1,0 +1,589 @@
+{
+ "meta": {
+  "title": "Marketing AI Journey Map",
+  "version": "1.0.0",
+  "date": "30 October 2026"
+ },
+ "categories": {
+  "S": "Strategy, Leadership and Value",
+  "W": "Workflows",
+  "O": "Operating Model and Ecosystem",
+  "P": "People and Skills",
+  "D": "Data and Technology",
+  "G": "Governance and Risk",
+  "C": "Culture and Change"
+ },
+ "phases": [
+  "Direct",
+  "Organise",
+  "Build",
+  "Scale",
+  "Sustain"
+ ],
+ "phaseSub": {
+  "L": [
+   "Set the ambition",
+   "Structure, fund and govern",
+   "Measure, partner and comply",
+   "Spread and embed",
+   "Reinforce"
+  ],
+  "M": [
+   "Learn the basics",
+   "Map, train and secure",
+   "Redesign and build foundations",
+   "Scale and automate",
+   "Monitor"
+  ]
+ },
+ "lanes": {
+  "L": {
+   "title": "Flow 1: Marketing leader",
+   "sub": "Sets direction, funds, organises, governs and leads people through the change.",
+   "order": [
+    [
+     "P3",
+     "S1",
+     "S4",
+     "C1"
+    ],
+    [
+     "S2",
+     "S5",
+     "O1",
+     "O2",
+     "G2",
+     "G1"
+    ],
+    [
+     "S3",
+     "O4",
+     "O5",
+     "G3"
+    ],
+    [
+     "O3",
+     "P4",
+     "C4"
+    ],
+    [
+     "C5"
+    ]
+   ]
+  },
+  "M": {
+   "title": "Flow 2: Marketer",
+   "sub": "Learns, maps and redesigns workflows, builds the data and tool foundations, and puts safeguards in place.",
+   "order": [
+    [
+     "P1"
+    ],
+    [
+     "W1",
+     "P2",
+     "C2",
+     "D1",
+     "D2"
+    ],
+    [
+     "G4",
+     "G5",
+     "W3",
+     "W2",
+     "C3",
+     "D3",
+     "D4"
+    ],
+    [
+     "W4",
+     "G6",
+     "W5"
+    ],
+    [
+     "D5"
+    ]
+   ]
+  }
+ },
+ "nodes": [
+  {
+   "id": "S1",
+   "short": "Set a transformative AI ambition for marketing",
+   "capability": "AI vision with transformative growth and innovation ambition",
+   "activity": "Set a transformative AI ambition for marketing until it is agreed and owned at the top",
+   "doneWhen": "A written AI ambition statement, approved by the senior team, that names growth or innovation goals; leaders describe it consistently when asked.",
+   "critical": true,
+   "lane": "L",
+   "phase": 0,
+   "needs": [
+    "P3"
+   ]
+  },
+  {
+   "id": "S2",
+   "short": "Choose and prioritise AI use cases",
+   "capability": "Priority domains and use-case portfolio",
+   "activity": "Choose and prioritise AI use cases until a funded portfolio guides the work",
+   "doneWhen": "A use-case portfolio with scoring criteria, owners and status, reviewed on a set cadence.",
+   "critical": false,
+   "lane": "L",
+   "phase": 1,
+   "needs": [
+    "S1"
+   ]
+  },
+  {
+   "id": "S3",
+   "short": "Track AI impact against business KPIs",
+   "capability": "Impact tracking: KPIs and business-level value",
+   "activity": "Track AI impact against business KPIs until value is reported routinely",
+   "doneWhen": "KPIs measured consistently across functional areas, covering both activities and outcomes, reviewed by leadership at least quarterly; at the highest level, a dashboard linking outcomes to business impact and the business strategy.",
+   "critical": true,
+   "lane": "L",
+   "phase": 2,
+   "needs": [
+    "S1",
+    "S2"
+   ]
+  },
+  {
+   "id": "S4",
+   "short": "Sponsor and role-model AI use",
+   "capability": "Executive sponsorship and visible role-modelling",
+   "activity": "Sponsor and role-model AI use until leaders visibly use and champion it",
+   "doneWhen": "One or more named executive sponsors for AI; leaders' own AI use is observable; the AI budget is reviewed transparently.",
+   "critical": true,
+   "lane": "L",
+   "phase": 0,
+   "needs": [
+    "S1"
+   ]
+  },
+  {
+   "id": "S5",
+   "short": "Commit and manage the AI budget",
+   "capability": "AI investment commitment and cost management",
+   "activity": "Commit and manage the AI budget until investment and cost are controlled",
+   "doneWhen": "An approved AI budget; cost per tool or workflow tracked against value delivered; a regular cost review.",
+   "critical": false,
+   "lane": "L",
+   "phase": 1,
+   "needs": [
+    "S2"
+   ]
+  },
+  {
+   "id": "W1",
+   "short": "Map and prioritise workflows",
+   "capability": "Workflow mapping and prioritisation",
+   "activity": "Map and prioritise workflows until the highest-value ones are chosen for redesign",
+   "doneWhen": "Documented end-to-end maps of core workflows, with a ranked list and the prioritisation criteria.",
+   "critical": false,
+   "lane": "M",
+   "phase": 1,
+   "needs": [
+    "S2",
+    "P1"
+   ]
+  },
+  {
+   "id": "W2",
+   "short": "Redesign workflows end to end",
+   "capability": "End-to-end redesign and embedding",
+   "activity": "Redesign workflows end to end until the new way of working is embedded",
+   "doneWhen": "Records that workflows were reviewed before AI was applied (redesigned or retired); before and after workflow maps showing steps, handovers or approvals removed; the old process retired; teams working the new way by default.",
+   "critical": true,
+   "lane": "M",
+   "phase": 2,
+   "needs": [
+    "W1",
+    "W3",
+    "O1",
+    "S3"
+   ]
+  },
+  {
+   "id": "W3",
+   "short": "Design human review points",
+   "capability": "Human-in-the-loop design",
+   "activity": "Design human review points until people check AI output where it matters",
+   "doneWhen": "A review-point map by output type and risk level; review logs or sampled records show the checks happen.",
+   "critical": false,
+   "lane": "M",
+   "phase": 2,
+   "needs": [
+    "G4",
+    "W1"
+   ]
+  },
+  {
+   "id": "W4",
+   "short": "Capture and reuse proven workflows",
+   "capability": "Feedback, scaling and reuse of proven workflows",
+   "activity": "Capture and reuse proven workflows until they scale across teams",
+   "doneWhen": "A workflow library or playbook with versions; performance data feeding changes; at least one workflow reused in another team or region.",
+   "critical": false,
+   "lane": "M",
+   "phase": 3,
+   "needs": [
+    "W2",
+    "S3"
+   ]
+  },
+  {
+   "id": "W5",
+   "short": "Orchestrate agents and automation",
+   "capability": "Agentic and automation orchestration",
+   "activity": "Orchestrate agents and automation until they run reliably within set limits",
+   "doneWhen": "Agents or automations in production with documented scope and limits; run logs; a named human supervisor for each.",
+   "critical": false,
+   "lane": "M",
+   "phase": 3,
+   "needs": [
+    "W2",
+    "D3",
+    "G6"
+   ]
+  },
+  {
+   "id": "O1",
+   "short": "Assign roles and ownership",
+   "capability": "Roles, ownership and business-led redesign",
+   "activity": "Assign roles and ownership until the business leads AI-enabled redesign",
+   "doneWhen": "A RACI or equivalent naming owners for AI workflows, outcomes and risks; business leaders named as redesign leads.",
+   "critical": false,
+   "lane": "L",
+   "phase": 1,
+   "needs": [
+    "S2"
+   ]
+  },
+  {
+   "id": "O2",
+   "short": "Establish a transformation office",
+   "capability": "Transformation office with authority to scale",
+   "activity": "Establish a transformation office until it has the authority to scale change",
+   "doneWhen": "A team charter with decision rights and a budget or mandate; a record of bottlenecks it has removed.",
+   "critical": false,
+   "lane": "L",
+   "phase": 1,
+   "needs": [
+    "O1",
+    "S4"
+   ]
+  },
+  {
+   "id": "O3",
+   "short": "Choose a central or distributed model",
+   "capability": "Central vs distributed model",
+   "activity": "Choose a central or distributed model until responsibilities are clear and working",
+   "doneWhen": "A documented central-versus-local split; standards the teams actually follow; no unresolved duplication across teams.",
+   "critical": false,
+   "lane": "L",
+   "phase": 3,
+   "needs": [
+    "O2",
+    "O5"
+   ]
+  },
+  {
+   "id": "O4",
+   "short": "Decide what to build, buy or partner for",
+   "capability": "Build, buy and partner decisions; agency management",
+   "activity": "Decide what to build, buy or partner for, and manage agencies, until choices are deliberate",
+   "doneWhen": "A build, buy or partner decision record; agency briefs and contracts that cover AI use; partners reviewed against the function's standards.",
+   "critical": false,
+   "lane": "L",
+   "phase": 2,
+   "needs": [
+    "S2",
+    "S5"
+   ]
+  },
+  {
+   "id": "O5",
+   "short": "Align marketing with IT, legal, sales and other functions",
+   "capability": "Cross-functional alignment",
+   "activity": "Align marketing with IT, legal, sales and other functions until AI work is joined up",
+   "doneWhen": "Joint AI priorities agreed with other functions; shared forum or regular meeting; shared data or process agreements.",
+   "critical": false,
+   "lane": "L",
+   "phase": 2,
+   "needs": [
+    "O1",
+    "S2"
+   ]
+  },
+  {
+   "id": "P1",
+   "short": "Build AI literacy for all staff",
+   "capability": "AI literacy (all staff)",
+   "activity": "Build AI literacy for all staff until everyone can use AI safely and effectively",
+   "doneWhen": "Completion and assessment records covering all staff; a short check showing staff can explain AI limits and approved-tool rules.",
+   "critical": false,
+   "lane": "M",
+   "phase": 0,
+   "needs": [
+    "S4"
+   ]
+  },
+  {
+   "id": "P2",
+   "short": "Train each role in the AI skills it needs",
+   "capability": "Role-based capability training",
+   "activity": "Train each role in the AI skills it needs until capability is verified in practice",
+   "doneWhen": "A role-by-role skills matrix with training mapped to it; evidence of the skills used in live work, not just course completion.",
+   "critical": false,
+   "lane": "M",
+   "phase": 1,
+   "needs": [
+    "P1",
+    "W1"
+   ]
+  },
+  {
+   "id": "P3",
+   "short": "Train leaders to be AI fluent",
+   "capability": "Leadership AI fluency",
+   "activity": "Train leaders until they are AI fluent and keep that fluency current",
+   "doneWhen": "Leader learning records; leaders can challenge AI claims in review meetings; AI literacy refreshed on a set cadence.",
+   "critical": false,
+   "lane": "L",
+   "phase": 0,
+   "needs": []
+  },
+  {
+   "id": "P4",
+   "short": "Plan the workforce strategically",
+   "capability": "Strategic workforce planning",
+   "activity": "Plan the workforce strategically until roles and skills match AI-enabled work",
+   "doneWhen": "A workforce plan with a skills-gap analysis and actions (hiring, reskilling, career paths) that are funded and tracked.",
+   "critical": false,
+   "lane": "L",
+   "phase": 3,
+   "needs": [
+    "W2",
+    "O1"
+   ]
+  },
+  {
+   "id": "D1",
+   "short": "Secure data and tool access",
+   "capability": "Access and security",
+   "activity": "Secure data and tool access until the right people, and only they, can use the right data",
+   "doneWhen": "Access control lists and tool approval records; security review completed before tools go live; regular access audits.",
+   "critical": false,
+   "lane": "M",
+   "phase": 1,
+   "needs": [
+    "G1"
+   ]
+  },
+  {
+   "id": "D2",
+   "short": "Improve data quality and availability",
+   "capability": "Data quality and availability",
+   "activity": "Improve data quality and availability until data is AI-ready",
+   "doneWhen": "Data quality measures (accuracy, completeness, timeliness) reported against agreed thresholds; AI tools can reach the data they need.",
+   "critical": false,
+   "lane": "M",
+   "phase": 1,
+   "needs": [
+    "S2",
+    "D1"
+   ]
+  },
+  {
+   "id": "D3",
+   "short": "Integrate data and build a semantic layer",
+   "capability": "Data integration, architecture and semantic layer",
+   "activity": "Integrate data and build a semantic layer until AI can use consistent definitions",
+   "doneWhen": "A data architecture diagram; a shared semantic layer, knowledge graph or maintained data dictionary used by AI tools; consistent definitions across systems.",
+   "critical": false,
+   "lane": "M",
+   "phase": 2,
+   "needs": [
+    "D2"
+   ]
+  },
+  {
+   "id": "D4",
+   "short": "Select and manage the AI tool stack",
+   "capability": "AI tool and platform stack",
+   "activity": "Select and manage the AI tool stack until it is rationalised and fit for purpose",
+   "doneWhen": "A documented tool stack with integration map; overlapping tools rationalised; a review against workflow needs.",
+   "critical": false,
+   "lane": "M",
+   "phase": 2,
+   "needs": [
+    "O4",
+    "D1"
+   ]
+  },
+  {
+   "id": "D5",
+   "short": "Monitor tool and model performance",
+   "capability": "Performance monitoring of tools and models",
+   "activity": "Monitor tool and model performance until problems are caught and fixed early",
+   "doneWhen": "Monitoring reports on accuracy, reliability, cost and drift; incidents logged with fixes and response times.",
+   "critical": false,
+   "lane": "M",
+   "phase": 4,
+   "needs": [
+    "D4",
+    "D3"
+   ]
+  },
+  {
+   "id": "G1",
+   "short": "Set AI policy and acceptable use",
+   "capability": "Policy and acceptable use",
+   "activity": "Set AI policy and acceptable use until it is published, understood and followed",
+   "doneWhen": "A published AI policy with an owner and review date; staff acknowledgement or training records; examples of breaches handled.",
+   "critical": false,
+   "lane": "L",
+   "phase": 1,
+   "needs": [
+    "G2"
+   ]
+  },
+  {
+   "id": "G2",
+   "short": "Align with enterprise governance and oversight",
+   "capability": "Enterprise governance alignment and oversight",
+   "activity": "Align with enterprise governance and oversight until senior ownership is in place",
+   "doneWhen": "A link to enterprise AI governance; a named senior overseer; an escalation route that has been used.",
+   "critical": false,
+   "lane": "L",
+   "phase": 1,
+   "needs": [
+    "S4"
+   ]
+  },
+  {
+   "id": "G3",
+   "short": "Meet regulatory requirements",
+   "capability": "Regulatory compliance",
+   "activity": "Meet regulatory requirements until compliance is assessed and evidenced",
+   "doneWhen": "A regulatory register covering AI use; assessments or records of compliance; a named owner and review cadence.",
+   "critical": false,
+   "lane": "L",
+   "phase": 2,
+   "needs": [
+    "G1"
+   ]
+  },
+  {
+   "id": "G4",
+   "short": "Assess and monitor AI risk",
+   "capability": "Risk assessment and monitoring (baseline and advanced)",
+   "activity": "Assess and monitor AI risk until risks are identified, rated and managed",
+   "doneWhen": "An AI risk register with ratings, owners and mitigations; monitoring reviewed on a set cadence.",
+   "critical": false,
+   "lane": "M",
+   "phase": 2,
+   "needs": [
+    "G1",
+    "W1"
+   ]
+  },
+  {
+   "id": "G5",
+   "short": "Safeguard customer trust, brand and IP",
+   "capability": "Customer trust, brand and IP safeguards",
+   "activity": "Safeguard customer trust, brand and IP until controls are in place and tested",
+   "doneWhen": "Disclosure, provenance, copyright and brand-review checks built into workflows; spot checks or audits show they are applied.",
+   "critical": false,
+   "lane": "M",
+   "phase": 2,
+   "needs": [
+    "G1",
+    "G4"
+   ]
+  },
+  {
+   "id": "G6",
+   "short": "Control agent autonomy and permissions",
+   "capability": "Agent autonomy and permission controls",
+   "activity": "Control agent autonomy and permissions until agents act only within approved limits",
+   "doneWhen": "A permissions matrix for each agent; action logs; a tested method to stop an agent; human approval for high-risk actions.",
+   "critical": false,
+   "lane": "M",
+   "phase": 3,
+   "needs": [
+    "G4",
+    "G1"
+   ]
+  },
+  {
+   "id": "C1",
+   "short": "Make the case for change and communicate regularly",
+   "capability": "Case for change and regular communication",
+   "activity": "Make the case for change and communicate regularly until staff understand why and what next",
+   "doneWhen": "A change narrative and communication plan; a regular cadence of updates that include results; staff survey or pulse answers show understanding.",
+   "critical": false,
+   "lane": "L",
+   "phase": 0,
+   "needs": [
+    "S1",
+    "S4"
+   ]
+  },
+  {
+   "id": "C2",
+   "short": "Build adoption and champion networks",
+   "capability": "Adoption and champion networks",
+   "activity": "Build adoption and champion networks until use spreads beyond early adopters",
+   "doneWhen": "A champion network with named members and time allocated; a community of practice that meets; adoption data showing spread beyond early adopters.",
+   "critical": false,
+   "lane": "M",
+   "phase": 1,
+   "needs": [
+    "C1",
+    "P1"
+   ]
+  },
+  {
+   "id": "C3",
+   "short": "Run test-and-learn experiments",
+   "capability": "Test-and-learn experimentation",
+   "activity": "Run test-and-learn experiments until learning is captured and acted on",
+   "doneWhen": "Experiment records with hypotheses, learning goals and results; a defined route from test to scale; at least one test scaled.",
+   "critical": false,
+   "lane": "M",
+   "phase": 2,
+   "needs": [
+    "G1",
+    "P1"
+   ]
+  },
+  {
+   "id": "C4",
+   "short": "Address trust, workload strain and transition",
+   "capability": "Employee trust, workload strain and workforce transition",
+   "activity": "Address trust, workload strain and transition until staff feel supported through the change",
+   "doneWhen": "Pulse survey or listening-session results on trust and workload; a log of concerns raised and actions taken.",
+   "critical": false,
+   "lane": "L",
+   "phase": 3,
+   "needs": [
+    "C1",
+    "P4"
+   ]
+  },
+  {
+   "id": "C5",
+   "short": "Reflect AI use and results in performance management",
+   "capability": "Performance management and recognition",
+   "activity": "Reflect AI use and results in performance management until good practice is rewarded",
+   "doneWhen": "AI use and outcomes appear in objectives and review templates; recognition or incentive examples.",
+   "critical": false,
+   "lane": "L",
+   "phase": 4,
+   "needs": [
+    "S3",
+    "C4"
+   ]
+  }
+ ]
+}

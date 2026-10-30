@@ -1,52 +1,38 @@
-# Workmatik AI Skills Assessment
+# Marketing AI Journey Map
 
-A browser-only self-assessment of AI skills across six domains and five proficiency levels, with EU AI Act indicators. Individuals rate themselves and download an XLSX; a manager or peer does the same; a facilitator loads the files into the Team rollup tab to see averages, gaps and calibration flags.
+A browser-only web page by Workmatik. It shows the 35 activities of the AI readiness framework for marketing as two flows, one for the marketing leader and one for the marketer, across five phases. Selecting an activity highlights what must come first and what it unlocks.
 
-No server, no account, no tracking. Nothing is uploaded or stored.
+Live site (once GitHub Pages is on): https://scottstockwellworkmatik.github.io/marketing-ai-journey-map/
 
-## Structure
+## Files
 
 ```
 index.html            Page shell, including Open Graph and Twitter preview tags
-og-image.png          1200 x 630 link-preview image
-assets/workmatik-logo-white.svg   Workmatik: wordmark for the navy header (cropped tight to the artwork)
-assets/workmatik-logo-black.svg   Workmatik: wordmark for print, where backgrounds are not printed
-css/styles.css        Workmatik brand tokens and layout
-js/app.js             All behaviour (assessment, XLSX export/import, rollup)
-data/framework.json   The framework: domains, levels, indicators, EU AI Act tags
-lib/xlsx.full.min.js  SheetJS 0.18.5 (vendored, Apache-2.0, see lib/xlsx-LICENSE.txt)
+og-image.png          2400 x 1260 link-preview image (the same size and 2:1 ratio as the Skills Map) (LinkedIn, Facebook, X)
+css/styles.css        Workmatik brand tokens and layout (journey styles at the end)
+js/app.js             Builds the map from the data file and draws the dependency arrows
+data/journey.json     All content: phases, flows, 35 activities, dependencies
+assets/               Logo files (see below)
+favicon.*, apple-touch-icon.png, web-app-manifest-*.png, site.webmanifest   Icon set
+.nojekyll             Tells GitHub Pages to serve the files as they are
 ```
 
-## Change the framework
+## Logo
 
-Edit `data/framework.json` only. No code change is needed to reword an indicator, add or remove an EU AI Act tag (`"eu": true`), or change the version.
+The header uses `assets/logo-black.svg` (it sits on the orange header, as on the AI Skills Assessment). `assets/logo-white.svg` is included for use on dark backgrounds. If the black file is missing, the page shows a text wordmark instead, so nothing breaks. 
 
-- Keep exactly 5 levels per domain and keep each domain `id` unique and stable. Exported files record scores by domain `id`.
-- Bump `meta.version` when content changes.
-- `meta.verification`: `"pending"` shows a banner saying EU AI Act references are under review. `"verified"` shows a footer note built from `meta.verifiedDate` and `meta.verifiedAgainst`. The last check is recorded in `VERIFICATION-REPORT.md`. Re-check before each client engagement, because the Act was amended in July 2026.
+## Changing the content
 
-## Run locally
+Edit `data/journey.json`. Each activity has an `id`, `lane` (`L` leader or `M` marketer), `phase` (0 to 4), `needs` (the IDs that must come first) and `critical`. The order of boxes in each phase is set in `lanes.L.order` and `lanes.M.order`. Allocation, phases and dependencies are the author's judgement and have no published source.
 
-Browsers block `fetch` from `file://`, so serve the folder:
+## Publishing on GitHub Pages
 
-```
-python3 -m http.server 8000
-```
+1. Create the repository `marketing-ai-journey-map` under the `ScottStockwellWorkmatik` account (public).
+2. Upload the contents of this folder, not the folder itself, so `index.html` sits at the top level.
+3. Settings, Pages, Source: Deploy from a branch, branch `main`, folder `/ (root)`, then Save.
+4. The `og:url` and `og:image` tags in `index.html` assume that repository name. Change both if you use a different name, because link previews need absolute URLs.
+5. Test the preview in LinkedIn's Post Inspector. LinkedIn caches previews, so re-scrape after any change to the image or tags, and raise the `?v=` number on the `og:image` tag when you replace the image.
 
-Then open http://localhost:8000
+## Testing locally
 
-## Publish on GitHub Pages
-
-1. Create an empty repository (for example `ai-skills-assessment`).
-2. Upload or push the contents of this folder to the `main` branch.
-3. Settings, Pages, Source: Deploy from a branch, Branch: `main`, folder `/ (root)`.
-4. The site appears at `https://<account>.github.io/<repository>/`.
-5. The `og:url` and `og:image` tags in `index.html` assume the repository is named `ai-skills-assessment` under `scottstockwellworkmatik`. If the repository name differs, update both before publishing. Link previews need absolute URLs.
-
-## Data handling
-
-Ratings live in the browser tab only. The XLSX file contains the name or initials entered, team, rater type, date and scores, so treat downloaded files as personal data under your client's data-protection policy. Using initials or staff codes is recommended.
-
-## Third-party
-
-SheetJS Community Edition 0.18.5, Apache-2.0.
+Open the folder through a local web server (for example `python3 -m http.server`), because browsers block `fetch` of the data file when you open `index.html` directly from disk.
