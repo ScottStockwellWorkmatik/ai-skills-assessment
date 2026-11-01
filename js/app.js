@@ -223,6 +223,25 @@
     wsM['!cols'] = [{ wch: 20 }, { wch: 40 }];
     XLSX.utils.book_append_sheet(wb, wsA, 'Assessment');
     XLSX.utils.book_append_sheet(wb, wsM, 'Meta');
+    // Shared-ID sheet for other Workmatik tools. The Assessment and Meta sheets above are unchanged, so earlier files and the team roll-up still work.
+    var wd = [
+      ['Field', 'Value'],
+      ['Tool', TOOL_NAME],
+      ['Tool key', 'skills'],
+      ['Data version', fw.meta.version],
+      ['Schema', 'workmatik-shared-ids-1'],
+      ['Rater type', rater],
+      ['Name', $('personName').value.trim()],
+      ['Team', $('teamName').value.trim()],
+      ['Date', todayISO()],
+      ['Note', 'Domain IDs (SD01 to SD06) are stable. Other Workmatik tools match on these IDs.'],
+      [],
+      ['Domain ID', 'Domain', 'Score (0-4)', 'Level']
+    ];
+    fw.domains.forEach(function (d, i) { wd.push(['SD' + (d.id + 1 < 10 ? '0' : '') + (d.id + 1), d.name, scores[i], levelName(scores[i])]); });
+    var wsW = XLSX.utils.aoa_to_sheet(wd);
+    wsW['!cols'] = [{ wch: 20 }, { wch: 60 }, { wch: 12 }, { wch: 14 }];
+    XLSX.utils.book_append_sheet(wb, wsW, 'Workmatik data');
     var who = ($('personName').value.trim() || 'results').replace(/[^A-Za-z0-9_-]+/g, '_').slice(0, 30) || 'results';
     XLSX.writeFile(wb, 'ai-skills-' + rater + '-' + who + '-' + todayISO() + '.xlsx');
   }
