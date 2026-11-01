@@ -48,7 +48,7 @@
 
   /* ---------- tabs ---------- */
 
-  var TAB_IDS = ['framework', 'assess', 'rollup', 'guide'];
+  var TAB_IDS = ['framework', 'assess', 'results', 'rollup', 'guide'];
   function switchTab(id, focus) {
     TAB_IDS.forEach(function (t) {
       var sel = t === id;
@@ -58,6 +58,7 @@
       $('panel-' + t).hidden = !sel;
       if (sel && focus) tab.focus();
     });
+    if (id === 'results' && fw) renderResults();
   }
   function initTabs() {
     TAB_IDS.forEach(function (t, i) {
@@ -191,6 +192,99 @@
     host.appendChild(metric('Average proficiency', round1(a).toFixed(1) + ' (' + levelName(Math.round(a)) + ')'));
     host.appendChild(metric('Lowest domain', low + ' (' + levelName(low) + ')'));
     host.appendChild(metric('Priority gaps (Aware or below)', gaps + (gaps === 1 ? ' domain' : ' domains')));
+  }
+
+
+  /* ---------- results tab ---------- */
+
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function svg(tag, attrs, text) {
+    var n = document.createElementNS(SVGNS, tag);
+    Object.keys(attrs || {}).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function radarChart() {
+    var N = fw.domains.length, W = 360, C = 180, R = 112;
+    var root = svg('svg', { viewBox: '0 0 ' + W + ' ' + W, role: 'img', 'aria-label': 'Radar chart of your six domain scores, each out of 4' });
+    function pt(i, v) { var a = -Math.PI / 2 + i * 2 * Math.PI / N, r = R * v / 4; return [C + r * Math.cos(a), C + r * Math.sin(a)]; }
+    [1, 2, 3, 4].forEach(function (ring) {
+      var pts = fw.domains.map(function (d, i) { return pt(i, ring).join(','); }).join(' ');
+      root.appendChild(svg('polygon', { points: pts, fill: 'none', stroke: '#D9D9D9', 'stroke-width': ring === 4 ? '1.5' : '1' }));
+    });
+    fw.domains.forEach(function (d, i) {
+      var e = pt(i, 4), l = pt(i, 4.75);
+      root.appendChild(svg('line', { x1: C, y1: C, x2: e[0], y2: e[1], stroke: '#D9D9D9' }));
+      var anchor = l[0] < C - 8 ? 'end' : l[0] > C + 8 ? 'start' : 'middle';
+      root.appendChild(svg('text', { x: l[0], y: l[1] + 4, 'text-anchor': anchor, 'font-size': '11', fill: '#0D0D0D' }, d.short));
+    });
+    var shape = fw.domains.map(function (d, i) { return pt(i, scores[i]).join(','); }).join(' ');
+    root.appendChild(svg('polygon', { points: shape, fill: 'rgba(242,93,39,0.28)', stroke: '#F25D27', 'stroke-width': '2.5', 'stroke-linejoin': 'round' }));
+    fw.domains.forEach(function (d, i) {
+      var p = pt(i, scores[i]);
+      root.appendChild(svg('circle', { cx: p[0], cy: p[1], r: '4', fill: '#F25D27' }));
+    });
+    return root;
+  }
+
+  function renderResults() {
+    var host = $('resultsBody');
+    clear(host);
+    var rater = $('raterType').value, name = $('personName').value.trim(), team = $('teamName').value.trim();
+    var who = [RATER_LABELS[rater], name, team].filter(Boolean).join(', ');
+    host.appendChild(el('h2', { class: 'res-head', text: 'My results' }));
+    host.appendChild(el('p', { class: 'res-sub', text: who + '. ' + todayISO() }));
+
+    var allZero = scores.every(function (v) { return v === 0; });
+    if (allZero) host.appendChild(el('p', { class: 'hint', text: 'All domains are still rated 0. Go to the Self-assessment tab and move the sliders to see your profile.' }));
+
+    var cards = el('div', { class: 'summary-grid' });
+    var a = avg(scores), low = Math.min.apply(null, scores), gaps = scores.filter(function (v) { return v <= 1; }).length;
+    function metric(label, val) { return el('div', { class: 'metric' }, el('div', { class: 'label', text: label }), el('div', { class: 'val', text: val })); }
+    cards.appendChild(metric('Average proficiency', round1(a).toFixed(1) + ' (' + levelName(Math.round(a)) + ')'));
+    cards.appendChild(metric('Lowest domain', low + ' (' + levelName(low) + ')'));
+    cards.appendChild(metric('Priority gaps (Aware or below)', gaps + (gaps === 1 ? ' domain' : ' domains')));
+    host.appendChild(cards);
+
+    var grid = el('div', { class: 'res-grid' });
+    var bars = el('div', { class: 'res-bars' });
+    fw.domains.forEach(function (d, i) {
+      var pct = (scores[i] / 4) * 100;
+      var bar = el('div', { class: 'bar', role: 'img', 'aria-label': d.short + ' ' + scores[i] + ' of 4, ' + levelName(scores[i]) }, el('span', { style: 'width:' + pct.toFixed(1) + '%' }));
+      bars.appendChild(el('div', { class: 'avg-row' }, el('span', { text: d.name }), bar, el('strong', { text: scores[i] + ' ' + levelName(scores[i]) })));
+    });
+    grid.appendChild(bars);
+    var radar = el('div', { class: 'res-radar' });
+    radar.appendChild(radarChart());
+    grid.appendChild(radar);
+    host.appendChild(grid);
+
+    host.appendChild(el('h3', { class: 'res-title', text: 'Your next steps' }));
+    host.appendChild(el('p', { class: 'res-sub', text: 'Lowest domains first. Each list shows the indicators for the next level up.' }));
+    var order = fw.domains.map(function (d, i) { return i; }).sort(function (x, y) { return scores[x] - scores[y] || x - y; });
+    order.forEach(function (i) {
+      var d = fw.domains[i], s = scores[i];
+      var box = el('div', { class: 'res-next' });
+      box.appendChild(el('h3', null, d.name, el('span', { class: 'pill ' + lvClass(s), text: s + ' ' + levelName(s) })));
+      if (s >= 4) box.appendChild(el('p', { text: 'Top level reached. Focus on sustaining and sharing this expertise.' }));
+      else {
+        var nx = d.levels[s + 1], ul = el('ul', { class: 'skills' });
+        nx.skills.forEach(function (sk) { ul.appendChild(skillItem(sk)); });
+        box.appendChild(el('p', null, el('strong', { text: 'Next level: ' + levelName(s + 1) + ' (' + nx.label + ')' })));
+        box.appendChild(ul);
+      }
+      host.appendChild(box);
+    });
+
+    var acts = el('div', { class: 'actions' });
+    var dl = el('button', { class: 'btn primary', type: 'button', text: 'Download results (XLSX)' });
+    dl.addEventListener('click', downloadAssessment);
+    var back = el('button', { class: 'btn', type: 'button', text: 'Back to ratings' });
+    back.addEventListener('click', function () { switchTab('assess', true); });
+    acts.appendChild(dl); acts.appendChild(back);
+    host.appendChild(acts);
+    host.appendChild(el('p', { class: 'res-note', text: 'Results exist only in this browser tab. Download the XLSX to keep them and to use them in the Team rollup tab or the AI Strategy View.' }));
   }
 
   /* ---------- XLSX export / import ---------- */
@@ -514,6 +608,7 @@
         buildGuide();
         initRollup();
         $('btnDownload').addEventListener('click', downloadAssessment);
+        $('btnViewResults').addEventListener('click', function () { switchTab('results', true); });
         $('btnReset').addEventListener('click', buildAssess);
       })
       .catch(function (err) {
