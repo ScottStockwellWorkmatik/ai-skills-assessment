@@ -48,7 +48,7 @@
 
   /* ---------- tabs ---------- */
 
-  var TAB_IDS = ['framework', 'assess', 'results', 'rollup', 'guide'];
+  var TAB_IDS = ['framework', 'assess', 'results', 'rollup', 'guide', 'toolkit'];
   function switchTab(id, focus) {
     TAB_IDS.forEach(function (t) {
       var sel = t === id;
@@ -608,6 +608,7 @@
         buildGuide();
         initRollup();
         $('btnDownload').addEventListener('click', downloadAssessment);
+        $('btnDownloadToolkit').addEventListener('click', downloadAssessment);
         $('btnViewResults').addEventListener('click', function () { switchTab('results', true); });
         $('btnReset').addEventListener('click', buildAssess);
       })
