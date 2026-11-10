@@ -296,6 +296,7 @@
   }
 
   function downloadAssessment() {
+    if (!Workmatik.requireOrg()) return;
     var rater = $('raterType').value;
     var meta = [
       ['Field', 'Value'],
@@ -304,7 +305,9 @@
       ['Rater type', rater],
       ['Name', $('personName').value.trim()],
       ['Team', $('teamName').value.trim()],
-      ['Date', todayISO()]
+      ['Date', todayISO()],
+      ['Organisation', Workmatik.get().org],
+      ['Business unit', Workmatik.get().unit]
     ];
     var rows = [['Domain ID', 'Domain', 'Score (0-4)', 'Level', 'Next-level indicators']];
     fw.domains.forEach(function (d, i) {
@@ -318,12 +321,7 @@
     XLSX.utils.book_append_sheet(wb, wsA, 'Assessment');
     XLSX.utils.book_append_sheet(wb, wsM, 'Meta');
     // Shared-ID sheet for other Workmatik tools. The Assessment and Meta sheets above are unchanged, so earlier files and the team roll-up still work.
-    var wd = [
-      ['Field', 'Value'],
-      ['Tool', TOOL_NAME],
-      ['Tool key', 'skills'],
-      ['Data version', fw.meta.version],
-      ['Schema', 'workmatik-shared-ids-1'],
+    var wd = Workmatik.metaRows(TOOL_NAME, 'skills', fw.meta.version, [
       ['Rater type', rater],
       ['Name', $('personName').value.trim()],
       ['Team', $('teamName').value.trim()],
@@ -331,13 +329,13 @@
       ['Note', 'Domain IDs (SD01 to SD06) are stable. Other Workmatik tools match on these IDs.'],
       [],
       ['Domain ID', 'Domain', 'Score (0-4)', 'Level']
-    ];
+    ]);
     fw.domains.forEach(function (d, i) { wd.push(['SD' + (d.id + 1 < 10 ? '0' : '') + (d.id + 1), d.name, scores[i], levelName(scores[i])]); });
     var wsW = XLSX.utils.aoa_to_sheet(wd);
     wsW['!cols'] = [{ wch: 20 }, { wch: 60 }, { wch: 12 }, { wch: 14 }];
     XLSX.utils.book_append_sheet(wb, wsW, 'Workmatik data');
-    var who = ($('personName').value.trim() || 'results').replace(/[^A-Za-z0-9_-]+/g, '_').slice(0, 30) || 'results';
-    XLSX.writeFile(wb, 'ai-skills-' + rater + '-' + who + '-' + todayISO() + '.xlsx');
+    var who = Workmatik.clean($('personName').value.trim(), 30) || 'person';
+    XLSX.writeFile(wb, Workmatik.fileName('skills-' + rater + '-' + who));
   }
 
   function parseWorkbook(buf, fileName) {
@@ -345,7 +343,8 @@
     var wsA = wb.Sheets['Assessment'];
     var wsM = wb.Sheets['Meta'];
     if (!wsA || !wsM) throw new Error('not a file downloaded from this tool (missing Assessment or Meta sheet)');
-    var meta = {};
+    var meta = {}, wdk = {};
+    if (wb.Sheets['Workmatik data']) XLSX.utils.sheet_to_json(wb.Sheets['Workmatik data'], { header: 1, defval: '' }).forEach(function (r) { if (r[0]) wdk[String(r[0])] = r[1]; });
     XLSX.utils.sheet_to_json(wsM, { header: 1, defval: '' }).forEach(function (r) {
       if (r[0] !== undefined && r[0] !== 'Field') meta[String(r[0])] = r[1];
     });
@@ -371,6 +370,7 @@
       name: String(meta['Name'] || '').slice(0, 60),
       team: String(meta['Team'] || '').slice(0, 60),
       date: String(meta['Date'] || '').slice(0, 20),
+      kv: wdk,
       scores: out
     };
   }
@@ -400,7 +400,12 @@
           var sub = parseWorkbook(reader.result, f.name);
           var dup = submissions.some(function (s) { return s.file === sub.file && s.name === sub.name && s.rater === sub.rater && s.date === sub.date; });
           if (dup) setMessage(msgs, false, f.name + ' (already loaded)');
-          else { submissions.push(sub); setMessage(msgs, true, f.name); }
+          else {
+            var chk = Workmatik.check(sub.kv);
+            Workmatik.prefillFrom(sub.kv);
+            submissions.push(sub); setMessage(msgs, true, f.name);
+            if (!chk.ok) msgs.appendChild(el('li', { class: 'bad', text: 'Check: ' + f.name + ' was loaded, but ' + chk.message }));
+          }
         } catch (err) {
           setMessage(msgs, false, f.name + ' (' + err.message + ')');
         }
@@ -532,7 +537,7 @@
     var c = [['Name', 'Rater', 'Domain', 'Self', 'Other rater', 'Gap']];
     calibrationRows().forEach(function (r) { c.push([r.name, RATER_LABELS[r.rater], r.domain, r.self, r.other, r.gap]); });
     XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(c), 'Calibration flags');
-    XLSX.writeFile(wb, 'ai-skills-rollup-' + todayISO() + '.xlsx');
+    XLSX.writeFile(wb, Workmatik.fileName('skills-rollup'));
   }
 
   function initRollup() {
@@ -585,6 +590,7 @@
 
   function init() {
     initTabs();
+    Workmatik.renderOrgBlock($('orgBlock'));
     fetch('data/framework.json', { cache: 'no-cache' })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (data) {
