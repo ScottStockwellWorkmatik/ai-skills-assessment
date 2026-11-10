@@ -543,6 +543,7 @@
   function initRollup() {
     var input = $('fileInput');
     input.addEventListener('change', function () { handleFiles(input.files); input.value = ''; });
+    Workmatik.enableDrop(function (files) { handleFiles(files); }, { label: 'Drop your Skills Assessment files' });
     var dz = $('dropzone');
     ['dragenter', 'dragover'].forEach(function (ev) {
       dz.addEventListener(ev, function (e) { e.preventDefault(); dz.classList.add('over'); });
