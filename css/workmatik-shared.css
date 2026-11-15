@@ -59,3 +59,9 @@
 .wm-btn.danger { background: #B42318; border-color: #B42318; color: #fff; }
 .wm-btn.danger:hover { background: #8F1B12; border-color: #8F1B12; }
 .wm-btn:focus-visible { outline: 3px solid #5DC1FF; outline-offset: 2px; }
+
+/* Primary buttons: Workmatik orange with white text, the same across every tool. */
+.btn.primary,.btn.wm-orange{background:#F25D27;border-color:#F25D27;color:#fff}
+.btn.primary:hover,.btn.wm-orange:hover{background:#C8431A;border-color:#C8431A;color:#fff}
+.wm-reminder{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:14px 0;padding:12px 14px;border:1.5px solid #5DC1FF;border-radius:10px;background:#EAF9FF}
+.wm-reminder p{margin:0;flex:1 1 260px}

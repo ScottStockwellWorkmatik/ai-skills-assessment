@@ -22,7 +22,7 @@
 <meta name="apple-mobile-web-app-title" content="AI Skills">
 <link rel="manifest" href="site.webmanifest">
 <link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/workmatik-shared.css?v=3x">
+<link rel="stylesheet" href="css/workmatik-shared.css?v=4">
 <style>
 .res-head{margin:0 0 4px}.res-sub{color:#555;margin:0 0 20px}
 .res-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,360px);gap:28px;align-items:start;margin:20px 0 32px}
@@ -105,11 +105,13 @@
 
     <div class="actions">
       <button class="btn primary" id="btnViewResults">View my results</button>
-      <button class="btn" id="btnDownload">Download results (XLSX)</button>
-      <button class="btn" id="btnReset">Reset ratings</button>
+      <button class="btn primary" id="btnDownload">Download Skills results (XLSX)</button>
+      <button class="btn primary" id="btnReset">Reset ratings</button>
+      <button class="btn primary" id="btnToPath" type="button">Return to AI Toolkit Path</button>
     </div>
     <p class="hint">Keep the downloaded file: it is your record and the input to the Team rollup tab.
-      For the person being assessed, use initials or a staff code if your policy requires pseudonymised data.</p>
+      For the person being assessed, use initials or a staff code if your policy requires pseudonymised data. Changing the name or initials starts a new assessment and resets the ratings.</p>
+    <div id="skillsReminder"></div>
   </section>
 
   <!-- My results -->
@@ -120,12 +122,12 @@
   <!-- Team rollup -->
   <section id="panel-rollup" role="tabpanel" aria-labelledby="tab-rollup" hidden>
     <div class="info-box">
-      <strong>Combine results.</strong> Drop in several downloaded XLSX files. Files are read in your browser and are not uploaded.
+      <strong>Combine results.</strong> Drop in several downloaded Skills XLSX files. Files are read in your browser and are not uploaded.
       Self-assessments build the team heatmap; manager and peer files for the same name are compared to flag gaps of more than one level.
     </div>
 
     <div class="dropzone" id="dropzone">
-      <label for="fileInput" class="btn">Choose XLSX files</label>
+      <label for="fileInput" class="btn primary">Choose Skills XLSX files</label>
       <input id="fileInput" type="file" accept=".xlsx" multiple>
       <span class="hint">or drag files here</span>
     </div>
@@ -138,6 +140,7 @@
             <option value="self">Self-assessments</option>
             <option value="manager">Manager feedback</option>
             <option value="peer">Peer feedback</option>
+            <option value="team">Team files</option>
             <option value="all">All raters</option>
           </select>
         </label>
@@ -148,7 +151,8 @@
           </select>
         </label>
         <button class="btn primary" id="btnRollupExport">Download rollup (XLSX)</button>
-        <button class="btn" id="btnRollupClear">Clear files</button>
+        <button class="btn primary" id="btnTeamFile">Download Team Skills (XLSX)</button>
+        <button class="btn primary" id="btnRollupClear">Clear files</button>
       </div>
 
       <h2>Domain averages</h2>
@@ -198,8 +202,8 @@
     <div class="card">
       <h2>Back to the AI Toolkit</h2>
       <p>The AI Toolkit guides you through the Workmatik AI Assessments in sequence and joins your downloaded files into one AI strategy.</p>
-      <p><strong>Before you leave:</strong> Use the &lsquo;Download Results&rsquo; button to save your current assessment if you haven&rsquo;t already. This page does not keep your scores once you close it.</p>
-      <div class="actions"><button class="btn" id="btnDownloadToolkit" type="button">Download Results (XLSX)</button> <a class="btn primary" style="text-decoration:none" href="https://scottstockwellworkmatik.github.io/workmatik-ai-toolkit/">Back to AI Toolkit</a></div>
+      <p><strong>Before you leave:</strong> Use the &lsquo;Download Skills results&rsquo; button to save your current assessment if you haven&rsquo;t already. This page does not keep your scores once you close it.</p>
+      <div class="actions"><button class="btn primary" id="btnDownloadToolkit" type="button">Download Skills results (XLSX)</button> <a class="btn primary" style="text-decoration:none" href="https://scottstockwellworkmatik.github.io/workmatik-ai-toolkit/">Back to AI Toolkit</a></div>
     </div>
   </section>
 
@@ -213,7 +217,7 @@
 </footer>
 
 <script src="lib/xlsx.full.min.js"></script>
-<script src="js/workmatik-shared.js?v=5"></script>
-<script src="js/app.js?v=5"></script>
+<script src="js/workmatik-shared.js?v=6"></script>
+<script src="js/app.js?v=6"></script>
 </body>
 </html>

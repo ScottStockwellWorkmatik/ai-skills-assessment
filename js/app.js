@@ -6,7 +6,7 @@
   'use strict';
 
   var TOOL_NAME = 'Workmatik AI Skills Assessment';
-  var RATER_LABELS = { self: 'Self-assessment', manager: 'Manager feedback', peer: 'Peer feedback' };
+  var RATER_LABELS = { self: 'Self-assessment', manager: 'Manager feedback', peer: 'Peer feedback', team: 'Team file' };
   var MAX_FILES = 200;
   var MAX_FILE_BYTES = 2 * 1024 * 1024;
 
@@ -153,6 +153,15 @@
       el('div', null, slider, scale),
       pill));
     row.appendChild(el('div', { id: 'next-' + di }));
+    var lvls = el('div', { class: 'level-grid' });
+    d.levels.forEach(function (lv, li) {
+      var ul = el('ul', { class: 'skills' });
+      lv.skills.forEach(function (s) { ul.appendChild(skillItem(s)); });
+      lvls.appendChild(el('div', { class: 'level-col' },
+        el('div', { class: 'level-name' }, el('span', { class: 'dot ' + lvClass(li), 'aria-hidden': 'true' }), li + ' ' + levelName(li)),
+        el('div', { class: 'level-sub', text: lv.label }), ul));
+    });
+    row.appendChild(el('details', { class: 'expandfw' }, el('summary', { text: 'Expand Framework' }), lvls));
     return row;
   }
 
@@ -336,6 +345,7 @@
     XLSX.utils.book_append_sheet(wb, wsW, 'Workmatik data');
     var who = Workmatik.clean($('personName').value.trim(), 30) || 'person';
     XLSX.writeFile(wb, Workmatik.fileName('skills-' + rater + '-' + who));
+    Workmatik.markDone('skills');
   }
 
   function parseWorkbook(buf, fileName) {
@@ -351,12 +361,13 @@
     if (meta['Tool'] !== TOOL_NAME) throw new Error('not a file downloaded from this tool');
     var rater = String(meta['Rater type'] || '').toLowerCase();
     if (!RATER_LABELS[rater]) throw new Error('unrecognised rater type');
+    var isTeam = rater === 'team', people = isTeam ? Math.max(1, parseInt(meta['People'], 10) || 1) : 1;
     var byId = {};
     XLSX.utils.sheet_to_json(wsA, { header: 1, defval: '' }).forEach(function (r, i) {
       if (i === 0) return;
       var id = Number(r[0]);
       var sc = Number(r[2]);
-      if (Number.isInteger(id) && Number.isInteger(sc) && sc >= 0 && sc <= 4) byId[id] = sc;
+      if (Number.isInteger(id) && isFinite(sc) && r[2] !== '' && sc >= 0 && sc <= 4 && (isTeam || Number.isInteger(sc))) byId[id] = sc;
     });
     var out = [];
     for (var i = 0; i < fw.domains.length; i++) {
@@ -371,6 +382,7 @@
       team: String(meta['Team'] || '').slice(0, 60),
       date: String(meta['Date'] || '').slice(0, 20),
       kv: wdk,
+      team: isTeam, people: people,
       scores: out
     };
   }
@@ -426,7 +438,8 @@
   }
 
   function domainAverages(list) {
-    return fw.domains.map(function (d, i) { return avg(list.map(function (s) { return s.scores[i]; })); });
+    var tot = list.reduce(function (t, s) { return t + (s.people || 1); }, 0) || 1;
+    return fw.domains.map(function (d, i) { return list.reduce(function (t, s) { return t + s.scores[i] * (s.people || 1); }, 0) / tot; });
   }
 
   function renderAverages(list) {
@@ -463,7 +476,7 @@
     var tbody = el('tbody');
     list.forEach(function (s) {
       var tr = el('tr', null, el('td', { text: subLabel(s) }), el('td', { text: RATER_LABELS[s.rater] }), el('td', { text: s.team }));
-      s.scores.forEach(function (v) { tr.appendChild(el('td', { class: 'score ' + lvClass(v), text: String(v) })); });
+      s.scores.forEach(function (v) { tr.appendChild(el('td', { class: 'score ' + lvClass(v), text: String(round1(v)) })); });
       tr.appendChild(el('td', { class: 'score', text: round1(avg(s.scores)).toFixed(1) }));
       tbody.appendChild(tr);
     });
@@ -540,7 +553,50 @@
     XLSX.writeFile(wb, Workmatik.fileName('skills-rollup'));
   }
 
+  // One file for a whole team: the average per domain and the number of people, with each person's scores on a second sheet.
+  function downloadTeamFile() {
+    var people = submissions.filter(function (s) { return s.rater === 'self'; });
+    if (!people.length) { Workmatik.notify('Load at least one Skills self-assessment file first. A team file is built from self-assessments.'); return; }
+    if (!Workmatik.requireOrg()) return;
+    var teams = {}; people.forEach(function (s) { teams[s.team || ''] = 1; });
+    var tn = Object.keys(teams).length === 1 ? Object.keys(teams)[0] : '';
+    var avgs = domainAverages(people);
+    var meta = [['Field', 'Value'], ['Tool', TOOL_NAME], ['Framework version', fw.meta.version], ['Rater type', 'team'], ['Name', tn || 'Team'], ['Team', tn],
+      ['Date', todayISO()], ['People', people.length], ['Organisation', Workmatik.get().org], ['Business unit', Workmatik.get().unit]];
+    var rows = [['Domain ID', 'Domain', 'Average score (0-4)', 'Level', 'People']];
+    fw.domains.forEach(function (d, i) { rows.push([d.id, d.name, Math.round(avgs[i] * 100) / 100, levelName(Math.max(0, Math.min(4, Math.round(avgs[i])))), people.length]); });
+    var ppl = [['Name or file', 'Team', 'Date'].concat(fw.domains.map(function (d) { return d.name; }))];
+    people.forEach(function (s) { ppl.push([subLabel(s), s.team, s.date].concat(s.scores)); });
+    var wd = Workmatik.metaRows(TOOL_NAME, 'skills', fw.meta.version, [
+      ['Rater type', 'team'], ['Name', tn || 'Team'], ['Team', tn], ['Date', todayISO()], ['People', people.length],
+      ['Note', 'Team file. The Domain averages cover the number of people shown and replace the individual files, so do not load both into the AI Toolkit.'],
+      [], ['Domain ID', 'Domain', 'Average (0-4)', 'People']]);
+    fw.domains.forEach(function (d, i) { wd.push(['SD0' + (d.id + 1), d.name, Math.round(avgs[i] * 100) / 100, people.length]); });
+    var wb = XLSX.utils.book_new();
+    function add(name, data, w) { var ws = XLSX.utils.aoa_to_sheet(data); ws['!cols'] = w.map(function (x) { return { wch: x }; }); XLSX.utils.book_append_sheet(wb, ws, name); }
+    add('Assessment', rows, [10, 42, 18, 14, 8]); add('Meta', meta, [20, 40]); add('People', ppl, [30, 20, 12, 18, 18, 18, 18, 18, 18]); add('Workmatik data', wd, [20, 60, 14, 10]);
+    XLSX.writeFile(wb, Workmatik.fileName('skills-team-' + (Workmatik.clean(tn, 30) || 'team')));
+    Workmatik.markDone('skills');
+  }
+
+  var lastName = '';
+  function initNameReset() {
+    var inp = $('personName');
+    inp.addEventListener('change', function () {
+      var nv = inp.value.trim();
+      if (nv === lastName) return;
+      var rated = scores.some(function (v) { return v > 0; });
+      if (!lastName || !rated) { lastName = nv; return; }
+      Workmatik.confirm('You have changed the name or initials. A new name starts a new assessment, so all ratings on this page will be reset to 0. Download the current results first if you want to keep them.', { title: 'Start a new assessment?', ok: 'Reset ratings', cancel: 'Keep current name', danger: true }).then(function (ok) {
+        if (ok) { buildAssess(); lastName = nv; } else { inp.value = lastName; }
+      });
+    });
+    // Remember the first name entered, so adding one afterwards counts as a change only if ratings already belong to another name.
+    inp.addEventListener('input', function () { if (!lastName && !scores.some(function (v) { return v > 0; })) lastName = inp.value.trim(); });
+  }
+
   function initRollup() {
+    $('btnTeamFile').addEventListener('click', downloadTeamFile);
     var input = $('fileInput');
     input.addEventListener('change', function () { handleFiles(input.files); input.value = ''; });
     Workmatik.enableDrop(function (files) { handleFiles(files); }, { label: 'Drop your Skills Assessment files' });
@@ -613,7 +669,9 @@
         buildFramework('all');
         buildAssess();
         buildGuide();
-        initRollup();
+        initRollup(); initNameReset();
+        $('btnToPath').addEventListener('click', function () { Workmatik.returnToPath(); });
+        $('skillsReminder').appendChild(Workmatik.pathReminder('skills', 'Reminder: Check you\u2019ve completed this step. Your file is only kept if you downloaded it. A single-person file counts as 1 person only, so add everyone in the Team rollup tab and download a team file for a reliable view.', true));
         $('btnDownload').addEventListener('click', downloadAssessment);
         $('btnDownloadToolkit').addEventListener('click', downloadAssessment);
         $('btnViewResults').addEventListener('click', function () { switchTab('results', true); });

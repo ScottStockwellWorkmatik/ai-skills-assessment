@@ -52,7 +52,7 @@ main { padding-top: 24px; padding-bottom: 48px; }
 :focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
 
 /* Boxes */
-.info-box { background: var(--pale); border-left: 4px solid var(--blue); border-radius: 6px; padding: 12px 16px; margin-bottom: 18px; color: var(--navy); }
+.info-box { background: var(--pale); border: 3px solid var(--blue); border-radius: 6px; padding: 12px 16px; margin-bottom: 18px; color: var(--navy); }
 .verify-note { background: #FFF3EC; border-left: 4px solid var(--orange); padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px; }
 .error { background: #FDE8E8; border-left: 4px solid #B42318; padding: 10px 14px; border-radius: 6px; color: #7A1010; }
 .card { border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; }
@@ -62,8 +62,12 @@ main { padding-top: 24px; padding-bottom: 48px; }
 /* Buttons and inputs */
 .btn { font: inherit; font-weight: 600; display: inline-block; padding: 9px 18px; border-radius: 8px; border: 2px solid var(--navy); background: var(--white); color: var(--navy); cursor: pointer; }
 .btn:hover { background: var(--pale); }
-.btn.primary { background: var(--orange); border-color: var(--orange); color: var(--ink); }
-.btn.primary:hover { background: var(--orange-dark); border-color: var(--orange-dark); color: var(--white); }
+.btn.primary { background: var(--orange); border-color: var(--orange); color: #fff; }
+.btn.primary:hover { background: var(--orange-dark); border-color: var(--orange-dark); color: #fff; }
+.expandfw { margin-top: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); }
+.expandfw > summary { cursor: pointer; padding: 8px 12px; font-weight: 600; color: var(--navy); }
+.expandfw .level-grid { padding: 8px 12px 12px; }
+.rollup-note { font-size: 13px; }
 input[type="text"], select { font: inherit; padding: 8px 10px; border: 1px solid #8A949C; border-radius: 8px; background: var(--white); color: var(--ink); width: 100%; }
 label { display: block; font-weight: 600; font-size: 13px; color: var(--navy); }
 label input, label select { margin-top: 4px; font-weight: 400; }

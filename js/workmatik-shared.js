@@ -260,10 +260,29 @@
   }
   initHandoff();
 
+  // Tell the Toolkit Path that a step's file has been downloaded, and take the user back to it. Both use a same-origin
+  // in-memory channel and a named tab. Nothing is stored. If the Toolkit tab is not open they do nothing, or open it fresh.
+  var CHAN = null; try { CHAN = new BroadcastChannel('workmatik-progress'); } catch (e) { CHAN = null; }
+  function markDone(step) { if (CHAN) { try { CHAN.postMessage({ type: 'done', step: step }); } catch (e) {} } }
+  function returnToPath() {
+    var w = null; try { w = window.open('', 'workmatik-toolkit'); } catch (e) { w = null; }
+    if (!w) { notify('Your browser blocked the Toolkit tab. Switch to the AI Toolkit tab and open the Path tab.'); return; }
+    var fresh = false; try { fresh = w.location.href === 'about:blank'; } catch (e) { fresh = false; }
+    if (fresh) { w.location.href = '../workmatik-ai-toolkit/'; }
+    else if (CHAN) { try { CHAN.postMessage({ type: 'goto', tab: 'path' }); } catch (e) {} }
+    try { w.focus(); } catch (e) {}
+  }
+  function pathReminder(step, text, noButton) {
+    var box = document.createElement('div'); box.className = 'wm-reminder';
+    var p = document.createElement('p'); p.textContent = text || 'Reminder: Check you\u2019ve completed this step. Your file is only kept if you downloaded it.'; box.appendChild(p);
+    if (!noButton) { var b = document.createElement('button'); b.type = 'button'; b.className = 'btn primary'; b.textContent = 'Return to AI Toolkit Path'; b.addEventListener('click', returnToPath); box.appendChild(b); }
+    return box;
+  }
+
   root.Workmatik = {
     SCHEMA: SCHEMA, clean: clean, same: same, today: today, get: current, set: set, onChange: onChange,
     fileName: fileName, metaRows: metaRows, fileContext: fileContext, check: check, prefillFrom: prefillFrom, requireOrg: requireOrg, renderOrgBlock: renderOrgBlock,
     enableDrop: enableDrop, identify: identify, identifyAll: identifyAll,
-    dialog: dialog, confirm: confirmDialog, notify: notify, confirmLoad: confirmLoad
+    dialog: dialog, confirm: confirmDialog, notify: notify, confirmLoad: confirmLoad, markDone: markDone, returnToPath: returnToPath, pathReminder: pathReminder
   };
 })(typeof window !== 'undefined' ? window : globalThis);
