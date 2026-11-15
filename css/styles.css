@@ -62,8 +62,8 @@ main { padding-top: 24px; padding-bottom: 48px; }
 /* Buttons and inputs */
 .btn { font: inherit; font-weight: 600; display: inline-block; padding: 9px 18px; border-radius: 8px; border: 2px solid var(--navy); background: var(--white); color: var(--navy); cursor: pointer; }
 .btn:hover { background: var(--pale); }
-.btn.primary { background: var(--orange); border-color: var(--orange); color: #fff; }
-.btn.primary:hover { background: var(--orange-dark); border-color: var(--orange-dark); color: #fff; }
+.btn.primary { background: #C8431A; border-color: #C8431A; color: #fff; }
+.btn.primary:hover { background: #9E3010; border-color: #9E3010; color: #fff; }
 .expandfw { margin-top: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); }
 .expandfw > summary { cursor: pointer; padding: 8px 12px; font-weight: 600; color: var(--navy); }
 .expandfw .level-grid { padding: 8px 12px 12px; }

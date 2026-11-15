@@ -54,14 +54,15 @@
 .wm-modal-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
 .wm-btn { font: inherit; font-weight: 600; font-size: 14px; padding: 9px 18px; border-radius: 8px; border: 2px solid #024873; background: #fff; color: #024873; cursor: pointer; }
 .wm-btn:hover { background: #EAF9FF; }
-.wm-btn.primary { background: #F25D27; border-color: #F25D27; color: #0D0D0D; }
-.wm-btn.primary:hover { background: #D94A17; border-color: #D94A17; color: #fff; }
+.wm-btn.primary { background: #C8431A; border-color: #C8431A; color: #fff; }
+.wm-btn.primary:hover { background: #9E3010; border-color: #9E3010; color: #fff; }
 .wm-btn.danger { background: #B42318; border-color: #B42318; color: #fff; }
 .wm-btn.danger:hover { background: #8F1B12; border-color: #8F1B12; }
 .wm-btn:focus-visible { outline: 3px solid #5DC1FF; outline-offset: 2px; }
 
-/* Primary buttons: Workmatik orange with white text, the same across every tool. */
-.btn.primary,.btn.wm-orange{background:#F25D27;border-color:#F25D27;color:#fff}
-.btn.primary:hover,.btn.wm-orange:hover{background:#C8431A;border-color:#C8431A;color:#fff}
+/* Primary buttons: deep Workmatik orange with white text (contrast 4.9:1, WCAG AA), the same across every tool. */
+.btn.primary,.btn.wm-orange{background:#C8431A;border-color:#C8431A;color:#fff;font-weight:600}
+.btn.primary:hover,.btn.wm-orange:hover{background:#9E3010;border-color:#9E3010;color:#fff}
+.btn:focus-visible,.wm-btn:focus-visible,button:focus-visible{outline:3px solid #024873;outline-offset:2px;box-shadow:0 0 0 2px #fff}
 .wm-reminder{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:14px 0;padding:12px 14px;border:1.5px solid #5DC1FF;border-radius:10px;background:#EAF9FF}
 .wm-reminder p{margin:0;flex:1 1 260px}
